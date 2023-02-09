@@ -19,12 +19,12 @@ int main(void)
 
 		if (ret == -1)
 		{
-			dprint(STDERR_FILENO, "Error getting user input.\n");
-			exit();
+			dprintf(STDERR_FILENO, "Error getting user input.\n");
+			exit(1);
 		}
 
-		if (strcmp(command, "exit") == 0)
-			exit();
+		if (strcmp(command, "exit\n") == 0)
+			exit(1);
 
 		/* pass input to some function to handle */
 	} while (true);
