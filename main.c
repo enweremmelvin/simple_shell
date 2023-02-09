@@ -8,44 +8,47 @@
 
 int main(int argc __attribute__((unused)), char *argv[])
 {
-	ssize_t ret;
-	char *command, *stripped;
-	size_t arg_num;
-
-	int exec_ret, i, fork_id, wait_time;
 	char **arg, **env;
+	char *user_input, *command, *strip;
+	int i, exec_ret, fork_id, wait_time;
 
 	wait_time = 2;
+	command = malloc(sizeof(char) * MAX_INPUT);
 
 	do {
 		printf("($) ");
-		ret = getline(&command, &arg_num, stdin);
+		user_input = fgets(command, MAX_INPUT, stdin);
 
-		arg = malloc(sizeof(command) + 1);
-		arg[0] = command;
+		if (user_input == NULL)
+			break;
+
+		strip = malloc(sizeof(char) * strlen(command));
+		for (i = 0; command[i] != '\n'; i++)
+			strip[i] = command[i];
+		i = 0;
+		if (!(strip[i]))
+			continue;
+
+		arg = malloc(strlen(user_input) + 1);
+		arg[0] = user_input;
 		arg[1] = NULL;
 		env = NULL;
 
-		while (command[i] != '\n')
-			i++;
-
-		stripped = malloc(sizeof(char) * i);
-
-		for (i = 0; command[i] != '\n'; i++)
-			stripped[i] = command[i];
-
 		fork_id = fork();
-
 		if (fork_id == 0)
-			exec_ret = execve(stripped, arg, env);
-		wait(&wait_time);
+			exec_ret = execve(strip, arg, env);
 
+		wait(&wait_time);
 		if (exec_ret == -1 && fork_id == 0)
 			printf("%s: No such file or directory\n", argv[0]);
 
-		if (strcmp(command, "exit\n") == 0 ||
-		    strcmp(command, "^C\n") == 0)
+		if (strcmp(command, "exit\n") == 0)
+		{
+			free(arg);
+			free(strip);
+			free(command);
 			exit(1);
+		}
 
 		/* pass input to some function to handle */
 	} while (true);
