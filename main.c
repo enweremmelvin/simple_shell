@@ -5,7 +5,7 @@
  *
  * Return: 0
  */
-//no changes yet.
+
 int main(int argc __attribute__((unused)), char *argv[])
 {
 	ssize_t ret;
@@ -25,12 +25,6 @@ int main(int argc __attribute__((unused)), char *argv[])
 		arg[0] = command;
 		arg[1] = NULL;
 		env = NULL;
-
-		if (ret == -1)
-		{
-			dprintf(STDERR_FILENO, "Error getting user input.\n");
-			exit(1);
-		}
 
 		while (command[i] != '\n')
 			i++;
