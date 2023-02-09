@@ -12,8 +12,7 @@ int main(void)
 	char *command;
 	size_t arg_num;
 
-	do
-	{
+	do {
 		printf("($) ");
 		ret = getline(&command, &arg_num, stdin);
 
