@@ -16,19 +16,19 @@ int main(int argc __attribute__((unused)), char *argv[])
 	command = malloc(sizeof(char) * MAX_INPUT);
 
 	do {
-		printf("($) ");
+		if (isatty(0) == 1)
+		{
+			printf("($) ");
+		}
 		user_input = fgets(command, MAX_INPUT, stdin);
-
 		if (user_input == NULL)
 			break;
-
 		strip = malloc(sizeof(char) * strlen(command));
 		for (i = 0; command[i] != '\n'; i++)
 			strip[i] = command[i];
 		i = 0;
 		if (!(strip[i]))
 			continue;
-
 		arg = malloc(strlen(user_input) + 1);
 		arg[0] = user_input;
 		arg[1] = NULL;
@@ -41,16 +41,6 @@ int main(int argc __attribute__((unused)), char *argv[])
 		wait(&wait_time);
 		if (exec_ret == -1 && fork_id == 0)
 			printf("%s: No such file or directory\n", argv[0]);
-
-		if (strcmp(command, "exit\n") == 0)
-		{
-			free(arg);
-			free(strip);
-			free(command);
-			exit(1);
-		}
-
-		/* pass input to some function to handle */
 	} while (true);
 
 	return (0);
