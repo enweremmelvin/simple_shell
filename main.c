@@ -19,9 +19,6 @@ int main(int argc __attribute__((unused)), char *argv[])
 	command = malloc(sizeof(char) * MAX_INPUT);
 
 	do {
-		if (isatty(0) == 0)
-			free(command);
-
 		if (isatty(0) == 1)
 			printf("($) ");
 
@@ -39,10 +36,6 @@ int main(int argc __attribute__((unused)), char *argv[])
 		if (*command == '\0')
 			continue;
 
-/*		command = strndup(command, (strlen(command) - 1));
-		printf("%ld\n", strlen(command));
-		arg[0] = command;
-		arg[1] = NULL;*/
 		fork_id = fork();
 
 		if (fork_id == 0)
@@ -52,9 +45,6 @@ int main(int argc __attribute__((unused)), char *argv[])
 		if (exec_ret == -1 && fork_id == 0)
 			printf("%s: No such file or directory\n", argv[0]);
 	} while (true);
-
-	free(command);
-	free(arg[0]);
 
 	return (0);
 }
