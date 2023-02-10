@@ -11,10 +11,11 @@ extern char **environ;
 int main(int argc __attribute__((unused)), char *argv[])
 {
 	char *user_input, *command, **arg;
-	int exec_ret, fork_id, wait_time;
+	int exec_ret, fork_id, wait_time, word_count;
 
 	arg = NULL;
 	wait_time = 2;
+	word_count = 0;
 	command = malloc(sizeof(char) * MAX_INPUT);
 
 	do {
@@ -25,10 +26,8 @@ int main(int argc __attribute__((unused)), char *argv[])
 			printf("($) ");
 
 		user_input = fgets(command, MAX_INPUT, stdin);
-		command = input_parser(command);
-		arg = breaker(command);
-
-		printf("%s\n", arg[0]);
+		command = input_parser(command, &word_count);
+		arg = breaker(command, word_count);
 
 		/* checking for malloc */
 		if (user_input == NULL)
@@ -37,7 +36,7 @@ int main(int argc __attribute__((unused)), char *argv[])
 			free(user_input);
 			break;
 		}
-		if (*command == '\n')
+		if (*command == '\0')
 			continue;
 
 /*		command = strndup(command, (strlen(command) - 1));

@@ -13,7 +13,7 @@
 #include <sys/wait.h>
 
 /* declare function prototypes */
-char **breaker(char *command);
-char *input_parser(char *input);
+char **breaker(char *command, int word_count);
+char *input_parser(char *input, int *word_count __attribute__((unused)));
 
 #endif

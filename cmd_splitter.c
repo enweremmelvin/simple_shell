@@ -9,26 +9,30 @@
  * Return: nothing
  */
 
-char **breaker(char *command)
+char **breaker(char *command, int word_count)
 {
 	char **arg;
-	int cmd_len, j, i, shifter, next_copy;
+	int i, j, k;
 
-	j = 0;
+	i = j = k = 0;
+	arg = malloc(sizeof(char *) * word_count);
+
+	for (i = 0; i < word_count; i++)
+		arg[i] = malloc(sizeof(char) * 50);
+
 	i = 0;
-	shifter = 0;
-	next_copy = 1;
-	cmd_len = strlen(command);
-	arg = malloc(sizeof(char) * cmd_len);
 
-	while(i < cmd_len)
+	while(command[i])
 	{
-		if (command[i] == ' ' || command[i] == '\0')
+		if (command[i] != 32 && command[i] != '\0')
 		{
-			arg[j] = strndup(command + shifter, (i - next_copy));
+			arg[j][k] = command[i];
+			k++;
+		}
+		else
+		{
 			j++;
-			shifter = i + 1;
-			next_copy = i + 1;
+			k = 0;
 		}
 
 		i++;
