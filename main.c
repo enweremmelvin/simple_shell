@@ -26,6 +26,9 @@ int main(int argc __attribute__((unused)), char *argv[])
 		command = input_parser(command, &word_count);
 		arg = breaker(command, word_count);
 
+		if (arg == NULL)
+			continue;
+
 		/* checking for malloc */
 		if (user_input == NULL)
 		{

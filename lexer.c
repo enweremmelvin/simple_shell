@@ -38,5 +38,8 @@ char **breaker(char *command, int word_count)
 		i++;
 	}
 
+	if (command_path(arg) == 1)
+		return (NULL);
+
 	return (arg);
 }
