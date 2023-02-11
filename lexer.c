@@ -9,7 +9,7 @@
  * Return: nothing
  */
 
-char **breaker(char *command, int word_count)
+char **breaker(char *command, int word_count, char **env) /*added to breaker parameter*/
 {
 	char **arg;
 	int i, j, k;
@@ -45,6 +45,13 @@ char **breaker(char *command, int word_count)
 	{
 		pid = getppid();
 		kill(pid, 1);
+	}
+	/*checking and printing for env goes here*/
+	if ((strcmp(arg[0], "env") == 0) || (strcmp(arg[0], "env\n") == 0))
+	{
+		/*env file goes here*/
+		print_env(env);
+		exit(0);
 	}
 
 	if (command_path(arg) == 1)
