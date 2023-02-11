@@ -31,7 +31,7 @@ typedef struct path
 
 /* declare function prototypes */
 int command_path(char **command);
-char **breaker(char *command, int word_count);
+char **breaker(char *command, int word_count, char **env); // added a new third argument to breaker to to get access to the declared **environ in main.c
 char *input_parser(char *input, int *word_count __attribute__((unused)));
-
+void print_env(char **env); /*add new function prototype*/
 #endif
