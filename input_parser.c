@@ -4,7 +4,8 @@
  * input_parser - parse the user input
  * this function makes a consigious string of chars into a token
  *
- * @string: string to be parsed
+ * @input: string to be parsed
+ * @word_count: number of words entered by user
  *
  * Return: ponter to char
  */

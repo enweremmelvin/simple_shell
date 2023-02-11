@@ -4,6 +4,9 @@
 /* define custom macros */
 #define MAX_INPUT 4096
 
+/* define needed extern variables */
+extern char **environ;
+
 /* include needed standard libraries */
 #include <stdio.h>
 #include <string.h>
@@ -27,7 +30,7 @@ typedef struct path
 
 
 /* declare function prototypes */
-void command_path(char **command);
+int command_path(char **command);
 char **breaker(char *command, int word_count);
 char *input_parser(char *input, int *word_count __attribute__((unused)));
 

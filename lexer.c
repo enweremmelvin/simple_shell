@@ -4,7 +4,7 @@
  * breaker - pass words in sanitized string to indexes or arg
  *
  * @command: sanitized string
- * @arg_string: store individual words in sanitized string at indexes
+ * @word_count: number of words entered by user (needed for dynamic malloc)
  *
  * Return: nothing
  */
@@ -14,6 +14,8 @@ char **breaker(char *command, int word_count)
 	char **arg;
 	int i, j, k;
 
+	pid_t pid __attribute__((unused));
+
 	i = j = k = 0;
 	arg = malloc(sizeof(char *) * word_count);
 
@@ -22,7 +24,7 @@ char **breaker(char *command, int word_count)
 
 	i = 0;
 
-	while(command[i])
+	while (command[i])
 	{
 		if (command[i] != 32 && command[i] != '\0')
 		{
@@ -36,6 +38,13 @@ char **breaker(char *command, int word_count)
 		}
 
 		i++;
+	}
+
+
+	if ((strcmp(arg[0], "exit") == 0) || (strcmp(arg[0], "exit\n") == 0))
+	{
+		pid = getppid();
+		kill(pid, 1);
 	}
 
 	if (command_path(arg) == 1)

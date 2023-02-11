@@ -13,8 +13,9 @@ int command_path(char **command)
 	int i, j, check;
 	put_path command_arr[] = {
 		{"ls", "/bin/ls"},
+		{"/bin/ls", "/bin/ls"},
 		{"pwd", "/bin/pwd"},
-		{"cp", "/bin/cp"},
+		{"/bin/pwd", "/bin/pwd"},
 		{NULL, NULL}
 	};
 
