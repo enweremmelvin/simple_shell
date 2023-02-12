@@ -37,5 +37,5 @@ int exit_shell(char *command, char *exit_code);
 char **breaker(char *command, int word_count, char **env);
 int check_input_mode(char **arg, char *fcommand, int word_count);
 char *input_parser(char *input, int *word_count __attribute__((unused)));
-
+ssize_t _getline(char **buffer_add, size_t *length, int fd_read);
 #endif

@@ -41,7 +41,7 @@ char **breaker(char *command, int word_count, char **env)
 	if (arg[0] == NULL)
 		return (NULL);
 	if ((strcmp(arg[0], "exit") == 0) || (strcmp(arg[0], "exit\n") == 0))
-		exit_shell(arg[0], arg[1]);
+		exit_shell(arg[0], arg[1]); 
 	/*checking and printing for env goes here*/
 	if ((strcmp(arg[0], "env") == 0) || (strcmp(arg[0], "env\n") == 0))
 		print_env(env);
