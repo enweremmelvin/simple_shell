@@ -21,7 +21,6 @@ extern char **environ;
  * @command: command to execute
  * @path: path to the executable program
  */
-
 typedef struct path
 {
 	char *command;
@@ -30,8 +29,13 @@ typedef struct path
 
 
 /* declare function prototypes */
+void print_env(char **env);
+int check_command(char *command);
 int command_path(char **command);
-char **breaker(char *command, int word_count, char **env); // added a new third argument to breaker to to get access to the declared **environ in main.c
+void free_arg(char **arg, int word_count);
+int exit_shell(char *command, char *exit_code);
+char **breaker(char *command, int word_count, char **env);
+int check_input_mode(char **arg, char *fcommand, int word_count);
 char *input_parser(char *input, int *word_count __attribute__((unused)));
-void print_env(char **env); /*add new function prototype*/
+
 #endif
