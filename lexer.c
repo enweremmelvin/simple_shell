@@ -50,8 +50,7 @@ char **breaker(char *command, int word_count, char **env) /*added to breaker par
 	if ((strcmp(arg[0], "env") == 0) || (strcmp(arg[0], "env\n") == 0))
 	{
 		/*env file goes here*/
-		print_env(env);
-		exit(0);
+		print_env(env);;
 	}
 
 	if (command_path(arg) == 1)
