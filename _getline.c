@@ -1,19 +1,20 @@
 #include "main.h"
 
 /**
+ * _getline - get user text from stdin (aka keyboard)
  *
+ * @buffer_add: initial string value
+ * @length: length of read string
+ * @fd_read: file descriptor being read from
  *
- *
+ * Return: number of char read
  */
 
 ssize_t _getline(char **buffer_add, size_t *length, int fd_read)
 {
 	static unsigned int one_char;
-
-	static ssize_t  char_append, confirm_read; /*for appending, track realloc lenght, error-checking*/
-
+	static ssize_t  char_append, confirm_read; /*for appending, gt realloc*/
 	size_t len;
-
 	char char_read, *buffer; /*for single char, array of chars*/
 
 	buffer = *buffer_add; /*initial string value before reading into it*/
@@ -37,18 +38,14 @@ ssize_t _getline(char **buffer_add, size_t *length, int fd_read)
 		confirm_read = (read(fd_read, &char_read, one_char));
 		buffer[char_append] = char_read;
 		char_read = '\0';
-		if (buffer[char_append] == char_read || buffer[char_append] == '\n')
+		if (buffer[char_append] == char_read
+		    || buffer[char_append] == '\n')
 			break;
 		if (confirm_read == -1)
-		       return (confirm_read);
+			return (confirm_read);
 		char_append++;
-	}while (true);
+	} while (true);
 	*length = len;
 	*buffer_add = buffer;
 	return (char_append);
-}	
-
-
-
-
-
+}

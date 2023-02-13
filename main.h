@@ -27,15 +27,33 @@ typedef struct path
 	char *path;
 } put_path;
 
+/**
+ * struct custom_commands - check if command is recognized
+ *
+ * @command: command to check for
+ * @handle_function: function to handle given command
+ */
+typedef struct custom_commands
+{
+	char *command;
+	void (*handle_function)(char **arg);
+} btn_cmd;
+
 
 /* declare function prototypes */
-void print_env(char **env);
 int check_command(char *command);
 int command_path(char **command);
 void free_arg(char **arg, int word_count);
 int exit_shell(char *command, char *exit_code);
 char **breaker(char *command, int word_count, char **env);
 int check_input_mode(char **arg, char *fcommand, int word_count);
-char *input_parser(char *input, int *word_count __attribute__((unused)));
 ssize_t _getline(char **buffer_add, size_t *length, int fd_read);
+int builtin_command(char **arg, char **env __attribute__((unused)));
+char *input_parser(char *input, int *word_count __attribute__((unused)));
+
+/* builtin command handlers */
+void do_setenv(char **arg);
+void print_env(char **env);
+void do_unsetenv(char **arg);
+
 #endif

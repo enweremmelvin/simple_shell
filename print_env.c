@@ -12,9 +12,22 @@ void print_env(char **env)
 	int i;
 
 	i = 0;
-	while (env[i] != NULL)
+
+	if (isatty(0) == 1)
 	{
-		printf("%s\n", env[i]);
-		i++;
+		while (env[i] != NULL)
+		{
+			printf("%s\n", env[i]);
+			i++;
+		}
+	}
+	if (isatty(0) != 1)
+	{
+		while (env[i] != NULL)
+		{
+			printf("%s\n", env[i]);
+			i++;
+		}
+		exit(0);
 	}
 }

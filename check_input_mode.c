@@ -8,7 +8,7 @@
  * @fcommand: first argument passed to program (executable name)
  * @word_count: number of words entered by user
  *
- * Return: 1 if in non-interactive mode
+ * Return: 1 if in interactive mode
  */
 
 int check_input_mode(char **arg, char *fcommand, int word_count)
@@ -25,6 +25,9 @@ int check_input_mode(char **arg, char *fcommand, int word_count)
 		printf("%s: No such file or directory\n", fcommand);
 		exit(1);
 	}
+
+	if (strcmp(arg[0], "pass") == 0)
+		return (1);
 
 	return (0);
 }

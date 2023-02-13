@@ -29,7 +29,7 @@ int main(int argc __attribute__((unused)), char *argv[])
 
 		if ((check_command(command) == 1) && (isatty(0) != 1))
 			exit(0);
-		if (check_command(command) == 1) /* check if command is empty*/
+		if ((check_command(command) == 1))
 			continue;
 		if (check_input_mode(arg, argv[0], word_count) == 1)
 			continue;
@@ -41,6 +41,8 @@ int main(int argc __attribute__((unused)), char *argv[])
 		wait(&wait_time);
 		if (exec_ret == -1 && fork_id == 0)
 			printf("%s: No such file or directory\n", argv[0]);
+		if (isatty(0) != 1) /* exit operations in non-interactive mode*/
+			break;
 	} while (true);
 
 	return (0);

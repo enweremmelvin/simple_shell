@@ -22,7 +22,6 @@ char **breaker(char *command, int word_count, char **env)
 		arg[i] = malloc(sizeof(char) * 50);
 
 	i = 0;
-
 	while (command[i])
 	{
 		if (command[i] != 32 && command[i] != '\0')
@@ -40,12 +39,15 @@ char **breaker(char *command, int word_count, char **env)
 	}
 	if (arg[0] == NULL)
 		return (NULL);
+	if (builtin_command(arg, env) == 0)
+	{
+		arg[0] = "pass";
+		return (arg);
+	}
 	if ((strcmp(arg[0], "exit") == 0) || (strcmp(arg[0], "exit\n") == 0))
-		exit_shell(arg[0], arg[1]); 
-	/*checking and printing for env goes here*/
-	if ((strcmp(arg[0], "env") == 0) || (strcmp(arg[0], "env\n") == 0))
-		print_env(env);
-
+		exit_shell(arg[0], arg[1]);
+/**	if ((strcmp(arg[0], "env") == 0) || (strcmp(arg[0], "env\n") == 0))
+	print_env(env);*/
 	if (command_path(arg) == 1)
 		return (NULL);
 
