@@ -6,6 +6,7 @@
  *                   if command is found in list (struct) of commands
  *
  * @arg: two dimensional array of args
+ * @env: environment variable from parent
  *
  * Return: 0 on success; 1 on failure
  */
@@ -17,7 +18,8 @@ int builtin_command(char **arg, char **env __attribute__((unused)))
 	btn_cmd command[] = {
 		{"setenv", do_setenv},
 		{"unsetenv", do_unsetenv},
-		{"env", print_env},
+		{"env", print_env}, /* don't change the index of this array */
+		{"exit", exit_shell},
 		{NULL, NULL}
 	};
 
