@@ -46,8 +46,8 @@ char **breaker(char *command, int word_count, char **env)
 	}
 	if ((strcmp(arg[0], "exit") == 0) || (strcmp(arg[0], "exit\n") == 0))
 		exit_shell(arg[0], arg[1]);
-/**	if ((strcmp(arg[0], "env") == 0) || (strcmp(arg[0], "env\n") == 0))
-	print_env(env);*/
+	if ((strcmp(arg[0], "cd") == 0) || (strcmp(arg[0], "cd\n") == 0))
+	change_dir(arg);
 	if (command_path(arg) == 1)
 		return (NULL);
 

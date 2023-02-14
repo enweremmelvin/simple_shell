@@ -6,6 +6,7 @@
 
 /* define needed extern variables */
 extern char **environ;
+
 /* include needed standard libraries */
 #include <stdio.h>
 #include <string.h>
@@ -54,5 +55,5 @@ char *input_parser(char *input, int *word_count __attribute__((unused)));
 void do_setenv(char **arg);
 void print_env(char **env);
 void do_unsetenv(char **arg);
-void change_dir(char **arg);
+
 #endif

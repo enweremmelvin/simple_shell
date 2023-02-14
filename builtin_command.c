@@ -18,6 +18,7 @@ int builtin_command(char **arg, char **env __attribute__((unused)))
 		{"setenv", do_setenv},
 		{"unsetenv", do_unsetenv},
 		{"env", print_env},
+		{"cd", change_dir},
 		{NULL, NULL}
 	};
 

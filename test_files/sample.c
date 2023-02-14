@@ -2,15 +2,11 @@
 
 int main(void)
 {
-	char *message;
+	char *check = malloc(sizeof(char) * 120);
+	getcwd(check, 120);
+	//char *s = "-";
+	int error = chdir(getenv("OLDPWD"));
 
-	size_t len;
-
-	ssize_t check;
-
-	len = 0;
-        check = _getline(&message, &len, 0);
-	printf("%s....%ld.... %ld\n", message, len,check);
+	printf("%s\n... %d\n",getenv("OLDPWD"), error);
 	return (0);
 }
-
