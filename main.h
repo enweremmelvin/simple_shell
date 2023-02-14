@@ -43,7 +43,6 @@ typedef struct custom_commands
 int check_command(char *command);
 int command_path(char **command);
 void free_arg(char **arg, int word_count);
-int exit_shell(char *command, char *exit_code);
 char **breaker(char *command, int word_count, char **env);
 int check_input_mode(char **arg, char *fcommand, int word_count);
 ssize_t _getline(char **buffer_add, size_t *length, int fd_read);
@@ -53,6 +52,7 @@ char *input_parser(char *input, int *word_count __attribute__((unused)));
 /* builtin command handlers */
 void do_setenv(char **arg);
 void print_env(char **env);
+void exit_shell(char **arg);
 void do_unsetenv(char **arg);
 void change_dir(char **arg);
 #endif
