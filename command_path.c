@@ -21,7 +21,7 @@ int command_path(char **command)
 
 	check = 0;
 
-	for (i = 0; command[i] != NULL; i++)
+	for (i = 0; command[i]; i++)
 	{
 		for (j = 0; command_arr[j].command != NULL; j++)
 		{

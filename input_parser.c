@@ -2,7 +2,8 @@
 
 /**
  * input_parser - parse the user input
- * this function makes a consigious string of chars into a token
+ * this function makes a contigious string of chars into a token
+ * these string of characters are delimited by whitespace
  *
  * @input: string to be parsed
  * @word_count: number of words entered by user

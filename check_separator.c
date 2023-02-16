@@ -22,14 +22,21 @@ int check_separator(char **arg, int word_count)
 
 	for (i = 0; arg[i] != NULL; i++)
 	{
-		if ((strcmp(arg[i], ";") == 0))
+		if ((strcmp(arg[i], ";") == 0) || (arg[i + 1] == NULL))
 		{
 			call_execve(arg, i, j);
+			if (arg[i + 1] == NULL)
+			{
+				j = i;
+				count += 1;
+				continue;
+			}
 			j = i + 1;
+
 			count += 1;
 		}
 	}
-	printf("Value of i = %d\n", i);
+
 	if (count == 0)
 		return (1);
 
@@ -41,6 +48,7 @@ int check_separator(char **arg, int word_count)
  *
  * @arg: two dimensional array of user input
  * @i: row number where seperator (;) was found
+ * @j: previous index before seperator (;)
  */
 
 void call_execve(char **arg, int i, int j)
@@ -59,8 +67,13 @@ void call_execve(char **arg, int i, int j)
 	row = 0;
 	index = j;
 
+	if (j == i)
+		new_array[row] = arg[j];
+
 	while (j < i)
 	{
+		if (arg[j] == NULL)
+			break;
 		new_array[row] = arg[j];
 		j++;
 		row++;

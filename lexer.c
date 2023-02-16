@@ -16,7 +16,7 @@ char **breaker(char *command, int word_count, char **env)
 	int i, j, k;
 
 	i = j = k = 0;
-	arg = malloc(sizeof(char *) * word_count);
+	arg = malloc(sizeof(char *) * (word_count + 1));
 
 	for (i = 0; i < word_count; i++)
 		arg[i] = malloc(sizeof(char) * 50);
@@ -24,7 +24,7 @@ char **breaker(char *command, int word_count, char **env)
 	i = 0;
 	while (command[i]) /* manual strtok */
 	{
-		if (command[i] != 32 && command[i] != '\0')
+		if (command[i] != 32 && command[i] != '\0' && command[i] != '\n')
 		{
 			arg[j][k] = command[i];
 			k++;
