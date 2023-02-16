@@ -6,6 +6,7 @@
 
 /* define needed extern variables */
 extern char **environ;
+
 /* include needed standard libraries */
 #include <stdio.h>
 #include <string.h>
@@ -42,11 +43,13 @@ typedef struct custom_commands
 /* declare function prototypes */
 int check_command(char *command);
 int command_path(char **command);
+void call_execve(char **arg, int i);
 void free_arg(char **arg, int word_count);
+int check_separator(char **arg, int word_count);
 char **breaker(char *command, int word_count, char **env);
+int builtin_command(char **arg, char **env, int word_count);
 int check_input_mode(char **arg, char *fcommand, int word_count);
 ssize_t _getline(char **buffer_add, size_t *length, int fd_read);
-int builtin_command(char **arg, char **env __attribute__((unused)));
 char *input_parser(char *input, int *word_count __attribute__((unused)));
 
 /* builtin command handlers */
@@ -55,4 +58,5 @@ void print_env(char **env);
 void exit_shell(char **arg);
 void do_unsetenv(char **arg);
 void change_dir(char **arg);
+
 #endif

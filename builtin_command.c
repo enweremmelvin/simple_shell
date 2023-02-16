@@ -11,24 +11,25 @@
  * Return: 0 on success; 1 on failure
  */
 
-int builtin_command(char **arg, char **env __attribute__((unused)))
+int builtin_command(char **arg, char **env, int word_count)
 {
 	int i;
 
 	btn_cmd command[] = {
+		{"env", print_env}, /* don't change the index of this array */
 		{"setenv", do_setenv},
 		{"unsetenv", do_unsetenv},
-		{"env", print_env},
-		{"cd", change_dir}, /* don't change the index of this array */
-		{"exit", exit_shell},
+		{"cd", change_dir},
 		{NULL, NULL}
 	};
+
+	(void) word_count;
 
 	for (i = 0; command[i].command != NULL; i++)
 	{
 		if (strcmp(arg[0], command[i].command) == 0)
 		{
-			if (i == 2)
+			if (i == 0)
 			{
 				(command[i].handle_function)(env);
 				return (0);

@@ -39,16 +39,17 @@ char **breaker(char *command, int word_count, char **env)
 	}
 	if (arg[0] == NULL)
 		return (NULL);
-	if (builtin_command(arg, env) == 0)
+	if (builtin_command(arg, env, word_count) == 0)
 	{
 		arg[0] = "pass";
 		return (arg);
 	}
 	if ((strcmp(arg[0], "exit") == 0) || (strcmp(arg[0], "exit\n") == 0))
-		exit_shell(arg[0], arg[1]);
-	/*if ((strcmp(arg[0], "cd") == 0) || (strcmp(arg[0], "cd\n") == 0))
-	change_dir(arg);*/
+		exit_shell(arg);
+
 	if (command_path(arg) == 1)
+		return (NULL);
+	if (check_separator(arg, word_count) == 0)
 		return (NULL);
 
 	return (arg);

@@ -49,13 +49,3 @@ void change_dir(char **arg)
 		return;
 	}
 }
-
-
-
-
-
-
-
-
-
-

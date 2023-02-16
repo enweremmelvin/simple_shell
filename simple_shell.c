@@ -20,7 +20,7 @@ int main(int argc __attribute__((unused)), char *argv[])
 	command = malloc(sizeof(char) * MAX_INPUT);
 
 	do {
-		if (isatty(0) == 1)
+		if ((isatty(0) == 1))
 			printf("($) ");
 
 		fgets(command, MAX_INPUT, stdin);
