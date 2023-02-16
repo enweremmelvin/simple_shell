@@ -19,7 +19,7 @@ char *input_parser(char *input, int *word_count __attribute__((unused)))
 	*word_count = 0;
 	temp = malloc(sizeof(char) * strlen(input));
 
-	while (input[i] != '\0')
+	while ((input[i] != '\0'))
 	{
 		if ((input[i] != 32) && (input[i] != '\n'))
 		{

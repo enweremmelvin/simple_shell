@@ -37,6 +37,7 @@ char **breaker(char *command, int word_count, char **env)
 
 		i++;
 	}
+	arg[j + 1] = NULL;
 	if (arg[0] == NULL)
 		return (NULL);
 	if (builtin_command(arg, env, word_count) == 0)
@@ -46,7 +47,6 @@ char **breaker(char *command, int word_count, char **env)
 	}
 	if ((strcmp(arg[0], "exit") == 0) || (strcmp(arg[0], "exit\n") == 0))
 		exit_shell(arg);
-
 	if (command_path(arg) == 1)
 		return (NULL);
 	if (check_separator(arg, word_count) == 0)

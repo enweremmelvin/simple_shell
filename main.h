@@ -43,8 +43,8 @@ typedef struct custom_commands
 /* declare function prototypes */
 int check_command(char *command);
 int command_path(char **command);
-void call_execve(char **arg, int i);
 void free_arg(char **arg, int word_count);
+void call_execve(char **arg, int i, int j);
 int check_separator(char **arg, int word_count);
 char **breaker(char *command, int word_count, char **env);
 int builtin_command(char **arg, char **env, int word_count);

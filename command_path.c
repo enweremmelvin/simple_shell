@@ -19,17 +19,16 @@ int command_path(char **command)
 		{NULL, NULL}
 	};
 
-	i = j = check = 0;
+	check = 0;
 
-	for (; command[i]; i++)
+	for (i = 0; command[i] != NULL; i++)
 	{
-		for (; command_arr[j].command != NULL; j++)
+		for (j = 0; command_arr[j].command != NULL; j++)
 		{
 			if (strcmp(command[i], command_arr[j].command) == 0)
 			{
 				check = 1;
 				command[i] = command_arr[j].path;
-				break;
 			}
 		}
 	}

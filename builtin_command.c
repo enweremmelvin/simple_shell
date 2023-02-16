@@ -7,6 +7,7 @@
  *
  * @arg: two dimensional array of args
  * @env: environment variable from parent
+ * @word_count: number of words entered by user
  *
  * Return: 0 on success; 1 on failure
  */

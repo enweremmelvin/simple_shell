@@ -12,22 +12,28 @@
 
 int check_separator(char **arg, int word_count)
 {
-	int i;
+	int i, j, count;
+
+	(void) word_count;
+	j = count = 0;
 
 	if (arg == NULL)
 		return (1);
 
-	for (i = 0; i < word_count; i++)
+	for (i = 0; arg[i] != NULL; i++)
 	{
-		if (strcmp(arg[i], ";") == 0)
+		if ((strcmp(arg[i], ";") == 0))
 		{
-			/* here */
-			call_execve(arg, i);
-			break;
+			call_execve(arg, i, j);
+			j = i + 1;
+			count += 1;
 		}
 	}
+	printf("Value of i = %d\n", i);
+	if (count == 0)
+		return (1);
 
-	return (1);
+	return (0);
 }
 
 /**
@@ -35,34 +41,30 @@ int check_separator(char **arg, int word_count)
  *
  * @arg: two dimensional array of user input
  * @i: row number where seperator (;) was found
- * @j: column number in row where seperator (;) was found
  */
 
-void call_execve(char **arg, int i)
+void call_execve(char **arg, int i, int j)
 {
+	int exec_ret;
 	pid_t fork_id;
 	char **new_array;
 	int index, row, wait_time;
-	int exec_ret;
-
-	printf("I get called!\n");
 
 	wait_time = 2;
 	new_array = malloc(sizeof(char *) * i);
 
-	for (index = 0; index < i; index++)
+	for (index = 0; index < (i - j); index++)
 		new_array[index] = malloc(sizeof(char) * strlen(arg[index]));
 
 	row = 0;
+	index = j;
 
-	while (row < i)
+	while (j < i)
 	{
-		new_array[row] = arg[row];
+		new_array[row] = arg[j];
+		j++;
 		row++;
 	}
-
-	printf("%s\n", new_array[0]);
-	printf("%s\n", arg[0]);
 
 	fork_id = fork();
 
@@ -73,10 +75,6 @@ void call_execve(char **arg, int i)
 	if (exec_ret == -1 && fork_id == 0)
 		printf("%s: No such file or directory\n", new_array[0]);
 
-	for (index = 0;  index < i; index++)
-		free(new_array[index]);
-	free(new_array);
 	if (isatty(0) != 1) /* exit operations in non-interactive mode*/
 		return;
-
 }
