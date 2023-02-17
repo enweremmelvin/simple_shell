@@ -22,24 +22,27 @@ int check_separator(char **arg, int word_count)
 
 	for (i = 0; arg[i] != NULL; i++)
 	{
-		if ((strcmp(arg[i], ";") == 0) || (arg[i + 1] == NULL))
+		if ((strcmp(arg[i], ";") == 0))
 		{
 			call_execve(arg, i, j);
-			if (arg[i + 1] == NULL)
-			{
-				j = i;
-				count += 1;
-				continue;
-			}
 			j = i + 1;
 
 			count += 1;
+		}
+		if ((arg[i + 1] == NULL) && (count > 0))
+		{
+			j = i;
+			call_execve(arg, i, j);
+			count += 1;
+			continue;
 		}
 	}
 
 	if (count == 0)
 		return (1);
 
+	if (isatty(0) != 1)
+		exit(0);
 	return (0);
 }
 
@@ -63,13 +66,22 @@ void call_execve(char **arg, int i, int j)
 
 	for (index = 0; index < (i - j); index++)
 		new_array[index] = malloc(sizeof(char) * strlen(arg[index]));
-
 	row = 0;
 	index = j;
 
 	if (j == i)
-		new_array[row] = arg[j];
+	{
+		while (strcmp(arg[j], ";") != 0)
+			j--;
+		j += 1;
 
+		while (arg[j] != NULL)
+		{
+			new_array[row] = arg[j];
+			j++;
+			row++;
+		}
+	}
 	while (j < i)
 	{
 		if (arg[j] == NULL)
@@ -78,16 +90,10 @@ void call_execve(char **arg, int i, int j)
 		j++;
 		row++;
 	}
-
 	fork_id = fork();
-
 	if (fork_id == 0)
 		exec_ret = execve(new_array[0], new_array, environ);
-
 	wait(&wait_time);
 	if (exec_ret == -1 && fork_id == 0)
 		printf("%s: No such file or directory\n", new_array[0]);
-
-	if (isatty(0) != 1) /* exit operations in non-interactive mode*/
-		return;
 }
