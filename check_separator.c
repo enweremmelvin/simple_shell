@@ -10,7 +10,7 @@
  * Return: 0 on success; 1 on failure
  */
 
-int check_separator(char **arg, int word_count)
+int check_separator(char **arg, char **env, int word_count)
 {
 	int i, j, count;
 
@@ -24,7 +24,7 @@ int check_separator(char **arg, int word_count)
 	{
 		if ((strcmp(arg[i], ";") == 0))
 		{
-			call_execve(arg, i, j);
+			call_execve(arg, env, i, j);
 			j = i + 1;
 
 			count += 1;
@@ -32,7 +32,7 @@ int check_separator(char **arg, int word_count)
 		if ((arg[i + 1] == NULL) && (count > 0))
 		{
 			j = i;
-			call_execve(arg, i, j);
+			call_execve(arg, env, i, j);
 			count += 1;
 			continue;
 		}
@@ -54,7 +54,7 @@ int check_separator(char **arg, int word_count)
  * @j: previous index before seperator (;)
  */
 
-void call_execve(char **arg, int i, int j)
+void call_execve(char **arg, char **env, int i, int j)
 {
 	int exec_ret;
 	pid_t fork_id;
@@ -90,6 +90,8 @@ void call_execve(char **arg, int i, int j)
 		j++;
 		row++;
 	}
+	if (builtin_command(new_array, env, 0) == 0)
+		return;
 	fork_id = fork();
 	if (fork_id == 0)
 		exec_ret = execve(new_array[0], new_array, environ);

@@ -13,7 +13,7 @@ void do_setenv(char **arg)
 	count = 0;
 	for (i = 0; arg[i]; i++)
 		count += 1;
-	if ((count - 2) != 3)
+	if (count != 3)
 	{
 		if (isatty(0) == 1)
 		{

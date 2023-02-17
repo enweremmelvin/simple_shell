@@ -44,9 +44,9 @@ typedef struct custom_commands
 int check_command(char *command);
 int command_path(char **command);
 void free_arg(char **arg, int word_count);
-void call_execve(char **arg, int i, int j);
-int check_separator(char **arg, int word_count);
+void call_execve(char **arg, char **env, int i, int j);
 char **breaker(char *command, int word_count, char **env);
+int check_separator(char **arg, char **env, int word_count);
 int builtin_command(char **arg, char **env, int word_count);
 int check_input_mode(char **arg, char *fcommand, int word_count);
 ssize_t _getline(char **buffer_add, size_t *length, int fd_read);

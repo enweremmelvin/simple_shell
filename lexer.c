@@ -76,7 +76,7 @@ int breaker_function_calls(char **arg, char **env, int word_count)
 	if (command_path(arg) == 1)
 		return (1);
 
-	if (check_separator(arg, word_count) == 0)
+	if (check_separator(arg, env, word_count) == 0)
 	{
 		arg[0] = "pass";
 		return (0);
