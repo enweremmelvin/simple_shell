@@ -29,7 +29,8 @@ void do_unsetenv(char **arg)
 		if (isatty(0) != 1)
 			exit(0);
 		return;
-	}i = unsetenv(arg[1]);
+	}
+	i = unsetenv(arg[1]);
 	if (i == -1)
 	{
 		dprintf(STDERR_FILENO, "Error deleting env variable\n");

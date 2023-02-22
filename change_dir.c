@@ -15,7 +15,7 @@ void change_dir(char **arg)
 
 	new_pwd = "PWD";
 	old_pwd = "OLDPWD";
-	if (strcmp(arg[2], ";") != 0)
+	if (arg[2])
 	{
 		printf("%s: too many arguments\n", arg[0]);
 		return;
