@@ -15,7 +15,7 @@ int hsh(info_t *info, char **av)
 	while (r != -1 && builtin_ret != -2)
 	{
 		clear_info(info);
-		if (info)
+		if (interactive(info))
 			_puts("$ ");
 		_eputchar(BUF_FLUSH);
 		r = get_input(info);
@@ -26,13 +26,13 @@ int hsh(info_t *info, char **av)
 			if (builtin_ret == -1)
 				find_cmd(info);
 		}
-		else if (info)
+		else if (interactive(info))
 			_putchar('\n');
 		free_info(info, 0);
 	}
 	write_history(info);
 	free_info(info, 1);
-	if (!(info) && info->status)
+	if (!interactive(info) && info->status)
 		exit(info->status);
 	if (builtin_ret == -2)
 	{
@@ -48,9 +48,9 @@ int hsh(info_t *info, char **av)
  * @info: the parameter & return info struct
  *
  * Return: -1 if builtin not found,
- *	0 if builtin executed successfully,
- *	1 if builtin found but not successful,
- *	2 if builtin signals exit()
+ *			0 if builtin executed successfully,
+ *			1 if builtin found but not successful,
+ *			-2 if builtin signals exit()
  */
 int find_builtin(info_t *info)
 {
@@ -68,7 +68,7 @@ int find_builtin(info_t *info)
 	};
 
 	for (i = 0; builtintbl[i].type; i++)
-		if (strcmp(info->argv[0], builtintbl[i].type) == 0)
+		if (_strcmp(info->argv[0], builtintbl[i].type) == 0)
 		{
 			info->line_count++;
 			built_in_ret = builtintbl[i].func(info);
@@ -108,9 +108,8 @@ void find_cmd(info_t *info)
 	}
 	else
 	{
-
-		if (((info) || _getenv(info, "PATH=")
-					|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
+		if ((interactive(info) || _getenv(info, "PATH=")
+			|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
 			fork_cmd(info);
 		else if (*(info->arg) != '\n')
 		{

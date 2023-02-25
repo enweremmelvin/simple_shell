@@ -36,39 +36,41 @@
 
 extern char **environ;
 
+
 /**
- * struct list_s - singly linked list data structure
- * @str: character string stored in the current node
- * @next: pointer to the next node in the list.
-*/
-typedef struct list_s
+ * struct liststr - singly linked list
+ * @num: the number field
+ * @str: a string
+ * @next: points to the next node
+ */
+typedef struct liststr
 {
 	int num;
 	char *str;
-	struct list_s *next;
+	struct liststr *next;
 } list_t;
 
 /**
- * struct passinfo - contains pseudo-arguements to pass into a function,
- * allowing uniform prototype for function pointer struct
- * @arg: a string generated from getline containing arguements
- * @argv:an array of strings generated from arg
- * @path: a string path for the current command
- * @argc: the argument count
- * @line_count: the error count
- * @err_num: the error code for exit()s
- * @linecount_flag: if on count this line of input
- * @fname: the program filename
- * @env: linked list local copy of environ
- * @environ: custom modified copy of environ from LL env
- * @history: the history node
- * @alias: the alias node
- * @env_changed: on if environ was changed
- * @status: the return status of the last exec'd command
- * @cmd_buf: address of pointer to cmd_buf, on if chaining
- * @cmd_buf_type: CMD_type ||, &&, ;
- * @readfd: the fd from which to read line input
- * @histcount: the history line number count
+ *struct passinfo - contains pseudo-arguements to pass into a function,
+ *		allowing uniform prototype for function pointer struct
+ *@arg: a string generated from getline containing arguements
+ *@argv: an array of strings generated from arg
+ *@path: a string path for the current command
+ *@argc: the argument count
+ *@line_count: the error count
+ *@err_num: the error code for exit()s
+ *@linecount_flag: if on count this line of input
+ *@fname: the program filename
+ *@env: linked list local copy of environ
+ *@environ: custom modified copy of environ from LL env
+ *@history: the history node
+ *@alias: the alias node
+ *@env_changed: on if environ was changed
+ *@status: the return status of the last exec'd command
+ *@cmd_buf: address of pointer to cmd_buf, on if chaining
+ *@cmd_buf_type: CMD_type ||, &&, ;
+ *@readfd: the fd from which to read line input
+ *@histcount: the history line number count
  */
 typedef struct passinfo
 {
@@ -95,12 +97,12 @@ typedef struct passinfo
 
 #define INFO_INIT \
 {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
-		0, 0, 0}
+	0, 0, 0}
 
 /**
- * struct builtin - contains a builtin string and related function
- * @type: the builtin command flag
- * @func: the function
+ *struct builtin - contains a builtin string and related function
+ *@type: the builtin command flag
+ *@func: the function
  */
 typedef struct builtin
 {
@@ -131,9 +133,9 @@ int _putsfd(char *str, int fd);
 
 /* toem_string.c */
 int _strlen(char *);
-int string_compare(char *, char *);
-char *string_starts_with(const char *, const char *);
-char *string_concat(char *, char *);
+int _strcmp(char *, char *);
+char *starts_with(const char *, const char *);
+char *_strcat(char *, char *);
 
 /* toem_string1.c */
 char *_strcpy(char *, char *);
@@ -143,7 +145,7 @@ int _putchar(char);
 
 /* toem_exits.c */
 char *_strncpy(char *, char *, int);
-char *_strcat(char *, char *, int);
+char *_strncat(char *, char *, int);
 char *_strchr(char *, char);
 
 /* toem_tokenizer.c */
@@ -159,15 +161,15 @@ void *_realloc(void *, unsigned int, unsigned int);
 int bfree(void **);
 
 /* toem_atoi.c */
-int interactive_program(info_t *);
+int interactive(info_t *);
 int is_delim(char, char *);
 int _isalpha(int);
 int _atoi(char *);
 
 /* toem_errors1.c */
-int string_to_int(char *);
+int _erratoi(char *);
 void print_error(info_t *, char *);
-int print_decimal(int, int);
+int print_d(int, int);
 char *convert_number(long int, int, int);
 void remove_comments(char *);
 
@@ -222,9 +224,6 @@ char **list_to_strings(list_t *);
 size_t print_list(const list_t *);
 list_t *node_starts_with(list_t *, char *, char);
 ssize_t get_node_index(list_t *, list_t *);
-
-/* function declarations */
-char *starts_with(const char *str, const char *prefix);
 
 /* toem_vars.c */
 int is_chain(info_t *, char *, size_t *);

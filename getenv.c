@@ -71,8 +71,8 @@ int _setenv(info_t *info, char *var, char *value)
 	if (!buf)
 		return (1);
 	_strcpy(buf, var);
-	strcat(buf, "=");
-	strcat(buf, value);
+	_strcat(buf, "=");
+	_strcat(buf, value);
 	node = info->env;
 	while (node)
 	{

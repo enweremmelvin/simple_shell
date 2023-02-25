@@ -61,7 +61,7 @@ ssize_t get_input(info_t *info)
 	r = input_buf(info, &buf, &len);
 	if (r == -1) /* EOF */
 		return (-1);
-	if (len) /* we have commands left in the chain buffer */
+	if (len)	/* we have commands left in the chain buffer */
 	{
 		j = i; /* init new iterator to current buf position */
 		p = buf + i; /* get pointer for return */
@@ -142,7 +142,7 @@ int _getline(info_t *info, char **ptr, size_t *length)
 		return (p ? free(p), -1 : -1);
 
 	if (s)
-		strncat(new_p, buf + i, k - i);
+		_strncat(new_p, buf + i, k - i);
 	else
 		_strncpy(new_p, buf + i, k - i + 1);
 

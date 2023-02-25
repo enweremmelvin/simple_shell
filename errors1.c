@@ -1,26 +1,24 @@
 #include "shell.h"
 
 /**
- * string_to_int - converts a string to an integer
- *
- * @string: the string to be converted
- *
+ * _erratoi - converts a string to an integer
+ * @s: the string to be converted
  * Return: 0 if no numbers in string, converted number otherwise
  *       -1 on error
  */
-int string_to_int(char *string)
+int _erratoi(char *s)
 {
-	int index = 0;
+	int i = 0;
 	unsigned long int result = 0;
 
-	if (*string == '+')
-		string++;
-	for (index = 0;  string[index] != '\0'; index++)
+	if (*s == '+')
+		s++;  /* TODO: why does this make main return 255? */
+	for (i = 0;  s[i] != '\0'; i++)
 	{
-		if (string[index] >= '0' && string[index] <= '9')
+		if (s[i] >= '0' && s[i] <= '9')
 		{
 			result *= 10;
-			result += (string[index] - '0');
+			result += (s[i] - '0');
 			if (result > INT_MAX)
 				return (-1);
 		}
@@ -31,19 +29,17 @@ int string_to_int(char *string)
 }
 
 /**
- * print_error - prints an error message in the format
- *	 "filename: line number: command: error message" to standard error.
- *
+ * print_error - prints an error message
  * @info: the parameter & return info struct
  * @estr: string containing specified error type
  * Return: 0 if no numbers in string, converted number otherwise
- *	-1 on error
+ *        -1 on error
  */
 void print_error(info_t *info, char *estr)
 {
 	_eputs(info->fname);
 	_eputs(": ");
-	print_decimal(info->line_count, STDERR_FILENO);
+	print_d(info->line_count, STDERR_FILENO);
 	_eputs(": ");
 	_eputs(info->argv[0]);
 	_eputs(": ");
@@ -51,40 +47,37 @@ void print_error(info_t *info, char *estr)
 }
 
 /**
- * print_decimal - function prints a decimal (integer) number (base 10)
+ * print_d - function prints a decimal (integer) number (base 10)
  * @input: the input
- * @fd: the file descriptor to write to
+ * @fd: the filedescriptor to write to
  *
  * Return: number of characters printed
  */
-int print_decimal(int input, int fd)
+int print_d(int input, int fd)
 {
 	int (*__putchar)(char) = _putchar;
-	int index, count = 0;
-	unsigned int absolute_value, current;
+	int i, count = 0;
+	unsigned int _abs_, current;
 
 	if (fd == STDERR_FILENO)
 		__putchar = _eputchar;
-
 	if (input < 0)
 	{
-		absolute_value = -input;
+		_abs_ = -input;
 		__putchar('-');
 		count++;
 	}
 	else
-		absolute_value = input;
-
-	current = absolute_value;
-
-	for (index = 1000000000; index > 1; index /= 10)
+		_abs_ = input;
+	current = _abs_;
+	for (i = 1000000000; i > 1; i /= 10)
 	{
-		if (absolute_value / index)
+		if (_abs_ / i)
 		{
-			__putchar('0' + current / index);
+			__putchar('0' + current / i);
 			count++;
 		}
-		current %= index;
+		current %= i;
 	}
 	__putchar('0' + current);
 	count++;
@@ -136,12 +129,12 @@ char *convert_number(long int num, int base, int flags)
  */
 void remove_comments(char *buf)
 {
-	int index;
+	int i;
 
-	for (index = 0; buf[index] != '\0'; index++)
-		if (buf[index] == '#' && (!index || buf[index - 1] == ' '))
+	for (i = 0; buf[i] != '\0'; i++)
+		if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
 		{
-			buf[index] = '\0';
+			buf[i] = '\0';
 			break;
 		}
 }

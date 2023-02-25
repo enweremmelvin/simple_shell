@@ -1,21 +1,20 @@
 #include "shell.h"
 
 /**
- * interactive_program - returns true if the shell is in interactive mode
- * @info: structure address
+ * interactive - returns true if shell is interactive mode
+ * @info: struct address
  *
- * Return: 1 or true if interactive mode, 0 or false otherwise
+ * Return: 1 if interactive mode, 0 otherwise
  */
-
-int interactive_program(info_t *info)
+int interactive(info_t *info)
 {
 	return (isatty(STDIN_FILENO) && info->readfd <= 2);
 }
 
 /**
- * is_delim - checks if character is  delimeter
+ * is_delim - checks if character is a delimeter
  * @c: the char to check
- * @delim: the delimeted strings
+ * @delim: the delimeter string
  * Return: 1 if true, 0 if false
  */
 int is_delim(char c, char *delim)
@@ -27,10 +26,11 @@ int is_delim(char c, char *delim)
 }
 
 /**
- * _isalpha - checks for alphabetic characters
- * @c: The characters to input
- * Return: 1 or true if c is alphabetic, 0 or false otherwise
+ *_isalpha - checks for alphabetic character
+ *@c: The character to input
+ *Return: 1 if c is alphabetic, 0 otherwise
  */
+
 int _isalpha(int c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
@@ -40,29 +40,35 @@ int _isalpha(int c)
 }
 
 /**
- * _atoi - converts  strings to an integer
- * @s: the strings to be converted
- * Return: 0 or false if no numbers in strings, converted number otherwise
+ *_atoi - converts a string to an integer
+ *@s: the string to be converted
+ *Return: 0 if no numbers in string, converted number otherwise
  */
 
 int _atoi(char *s)
 {
-	int i, sign = 1, result = 0;
+	int i, sign = 1, flag = 0, output;
+	unsigned int result = 0;
 
-	for (i = 0; s[i]; i++)
+	for (i = 0;  s[i] != '\0' && flag != 2; i++)
 	{
-	if (s[i] == '-')
-	{
-		sign *= -1;
-	}
-	else if (s[i] >= '0' && s[i] <= '9')
-	{
-		result *= 10;
-		result += (s[i] - '0');
-	}
-	if (result && (s[i + 1] < '0' || s[i + 1] > '9'))
-		break;
+		if (s[i] == '-')
+			sign *= -1;
+
+		if (s[i] >= '0' && s[i] <= '9')
+		{
+			flag = 1;
+			result *= 10;
+			result += (s[i] - '0');
+		}
+		else if (flag == 1)
+			flag = 2;
 	}
 
-	return (result * sign);
+	if (sign == -1)
+		output = -result;
+	else
+		output = result;
+
+	return (output);
 }
